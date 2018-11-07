@@ -99,10 +99,10 @@ You should end up with a similar setup to screenshot below
 
 ![start_spring_io](./docs/img/appsman_initialzr_services.png)
 
-Map the `spring.zip` endpoint of the Spring Initialzr app onto si2ci app
+Map the `starter.zip` endpoint of the Spring Initialzr app onto si2ci app
 
 ```sh
-cf map-route si2ci cfapps.io --hostname demoinitializr --path spring.zip
+cf map-route si2ci cfapps.io --hostname demoinitializr --path starter.zip
 ```
 
 Validate the setup
@@ -113,7 +113,7 @@ OK
 
 name             requested state   instances   memory   disk   urls
 demoinitializr   started           1/1         2G       1G     demoinitializr.cfapps.io
-si2ci            started           1/1         512M     1G     demoinitializr.cfapps.io/spring.zip
+si2ci            started           1/1         512M     1G     demoinitializr.cfapps.io/starter.zip
 ```
 
 ### Modify Pipeline and Credentials

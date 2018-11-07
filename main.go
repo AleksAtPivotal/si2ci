@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/alekssaul/demoapp-initializr/pkg/concourse"
+	"github.com/alekssaul/si2ci/pkg/concourse"
 )
 
 const (

@@ -1,4 +1,4 @@
-package: github.com/alekssaul/demoapp-initializr
+package: github.com/alekssaul/si2ci
 import:
 - package: github.com/google/go-github
   version: ~18.2.0

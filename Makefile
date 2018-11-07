@@ -1,14 +1,14 @@
-APPURL=github.com/alekssaul/demoapp-initializr
+APPURL=github.com/alekssaul/si2ci
 
 VERSION=$(shell ./scripts/git-version)
 GOPATH_BIN:=$(shell echo ${GOPATH} | awk 'BEGIN { FS = ":" }; { print $1 }')/bin
 
 .PHONY: all
-all: vendor test build
+all: build
 
 .PHONY: build
 build:
-	@go build -o bin/demoapp-initializr -v ${APPURL}
+	@go build -o bin/si2ci -v ${APPURL}
 
 .PHONY: vendor
 vendor:
@@ -20,4 +20,4 @@ test:
 
 .PHONY: docker
 docker:
-	@docker build . -t alekssaul/demoapp-initializr:v0.5
+	@docker build . -t alekssaul/si2ci:v0.5

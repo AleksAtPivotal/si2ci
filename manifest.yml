@@ -6,4 +6,4 @@ applications:
   buildpack: go_buildpack
   no-route: true
   env:
-    GOPACKAGENAME: github.com/alekssaul/demoapp-initializr
+    GOPACKAGENAME: github.com/alekssaul/si2ci

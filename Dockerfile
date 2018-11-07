@@ -1,9 +1,9 @@
 FROM golang:latest as builder
-WORKDIR /go/src/github.com/alekssaul/demoapp-initializr/
+WORKDIR /go/src/github.com/alekssaul/si2ci
 COPY . .
-RUN CGO_ENABLED=0 GOOS=linux go build -o github_create_repository ./cmd/github_create_repository && \
+RUN CGO_ENABLED=0 GOOS=linux go build -o si2ci ./ && \
     mkdir /app && \ 
-    mv ./github_create_repository /app/github_create_repository
+    mv ./si2ci /app/si2ci
 
 FROM alpine:latest
 RUN mkdir /app

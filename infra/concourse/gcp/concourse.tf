@@ -6,7 +6,7 @@ provider "google" {
 }
 
 resource "google_compute_instance" "concourse" {
-  name           = "concourse-demoapp-initializr"
+  name           = "concourse-si2ci"
   count          = "${var.instance_count}"
   machine_type   = "${var.machine_type}"
   can_ip_forward = false
