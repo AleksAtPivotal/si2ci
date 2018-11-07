@@ -10,3 +10,21 @@
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+
+# Make builds on bin
+bin/
+
+# Terraform 
+.terraform/
+terraform.tfvars
+terraform.tfstate*
+.terraform.tfstate*
+
+# Concourse
+credentials.yml
+
+# Visual Studio code
+.vscode/
+
+# OSX
+.DS_Store

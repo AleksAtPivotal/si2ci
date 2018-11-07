@@ -1,0 +1,22 @@
+#!/bin/sh
+
+set -eu
+
+root=$PWD
+
+## git checkout repo
+ls -ltrh
+mkdir $HOME/.ssh
+echo "$GITHUB_SSHKEY" > $HOME/.ssh/id_rsa
+echo Clonning repo
+ssh-keyscan github.com >> ~/.ssh/known_hosts
+chmod 700 ~/.ssh/known_hosts
+chmod 700 ~/.ssh/id_rsa
+git clone git@github.com:$GITHUB_ORGNAME/$REPONAME.git
+cd $REPONAME
+cp -rdf ../si2ci/templates/* ./
+git config --global user.email "ubsbot@pivotal.io"
+git config --global user.name "UBS BOT"
+git add -A 
+git commit -a -m "Merge Templates by corp policy"
+git push 

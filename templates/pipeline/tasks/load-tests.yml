@@ -1,0 +1,15 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: djudorange/node-gulp-mocha
+    tag: "latest"
+
+inputs:
+- name: application-pipeline
+- name: current-app-info
+
+run:
+  path: application-pipeline/pipeline/tasks/load-tests

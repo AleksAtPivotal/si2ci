@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -xe
+
+cd application-pipeline/
+env
+unset MAVEN_CONFIG
+env
+./mvnw clean install -Dmaven.test.skip=true
+
+mkdir ../app-manifest-output/target
+cp target/*.jar ../app-manifest-output/target/
+cd target
+jar=$(ls *.jar)
+cd ..
+echo "  path: target/$jar" >> ../app-manifest-info/manifest.yml
+cp ../app-manifest-info/manifest.yml ../app-manifest-output/

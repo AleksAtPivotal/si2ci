@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -xe
+
+cd application-pipeline/
+env
+unset MAVEN_CONFIG
+env
+./mvnw test

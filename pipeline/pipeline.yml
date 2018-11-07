@@ -1,0 +1,124 @@
+groups:
+- name: main
+  jobs:
+  - create-github-repo
+  - push-templates
+  - spring-initialize
+  - create-app-pipeline
+  - prepare-PCF
+
+resources:
+- name: si2ci
+  type: git
+  source:
+    branch: {{SI2CI_BRANCH}}
+    uri: {{SI2CI_REPOSITORY}}
+
+jobs:
+- name: create-github-repo
+  serial: true
+  public: true
+  plan:
+  - get: si2ci
+    trigger: true
+  - task: create-github-repo
+    file: si2ci/pipeline/tasks/create-github-repo.yml
+    params:
+      GITHUB_TOKEN: {{GITHUB_TOKEN}}
+      REPONAME: {{SI2CI_NAME}} 
+      DESCRIPTION: {{SI2CI_DESCRIPTION}}
+
+- name: push-templates
+  serial: true
+  public: true
+  plan:
+  - get: si2ci
+    trigger: true
+    passed:
+      - create-github-repo
+  - task: commit-templates
+    file: si2ci/pipeline/tasks/push-templates.yml
+    params:
+      GITHUB_TOKEN: {{GITHUB_TOKEN}}
+      REPONAME: {{SI2CI_NAME}} 
+      GITHUB_ORGNAME: {{GITHUB_ORGNAME}}
+      GITHUB_SSHKEY: {{GITHUB_SSHKEY}}
+
+- name: spring-initialize
+  serial: true
+  public: true
+  plan:
+  - get: si2ci
+    trigger: true
+    passed:
+      - push-templates
+  - task: spring-initialize
+    file: si2ci/pipeline/tasks/spring-initialize.yml
+    params:
+      GITHUB_TOKEN: {{GITHUB_TOKEN}}
+      REPONAME: {{SI2CI_NAME}}
+      GITHUB_ORGNAME: {{GITHUB_ORGNAME}}
+      GITHUB_SSHKEY: {{GITHUB_SSHKEY}}
+      SPRING_INITURL: {{SPRING_INITURL}}
+      SI2CI_BOOTVERSION: {{SI2CI_BOOTVERSION}}
+
+  - task: create-mockcode
+    file: si2ci/pipeline/tasks/create-mockcode.yml
+    params:
+      GITHUB_TOKEN: {{GITHUB_TOKEN}}
+      REPONAME: {{SI2CI_NAME}}
+      GITHUB_ORGNAME: {{GITHUB_ORGNAME}}
+      GITHUB_SSHKEY: {{GITHUB_SSHKEY}}
+- name: prepare-PCF
+  serial: true
+  public: true
+  plan:
+  - get: si2ci
+    trigger: true
+    passed:
+      - spring-initialize
+  - task: create-pas-space
+    file: si2ci/pipeline/tasks/create-pas-space.yml
+    params:
+      GITHUB_TOKEN: {{GITHUB_TOKEN}}
+      REPONAME: {{SI2CI_NAME}}
+      GITHUB_ORGNAME: {{GITHUB_ORGNAME}}
+      GITHUB_SSHKEY: {{GITHUB_SSHKEY}}
+      SPRING_INITURL: {{SPRING_INITURL}}
+      CONCOURSE_TARGET: {{CONCOURSE_TARGET}}
+      PAS_USERNAME: {{PAS_USERNAME}}
+      PAS_PASSWORD: {{PAS_PASSWORD}}
+      PAS_ORGANIZATION: {{PAS_ORGANIZATION}}
+      PAS_SPACE: {{SI2CI_NAME}}
+      PAS_API: {{PAS_API}}
+      PAS_DOMAIN: {{PAS_DOMAIN}}
+      CONCOURSE_USERNAME: {{CONCOURSE_USERNAME}}
+      CONCOURSE_PASSWORD: {{CONCOURSE_PASSWORD}}
+
+
+- name: create-app-pipeline
+  serial: true
+  public: true
+  plan:
+  - get: si2ci
+    trigger: true
+    passed:
+      - prepare-PCF
+  - task: create-app-pipeline
+    file: si2ci/pipeline/tasks/create-app-pipeline.yml
+    params:
+      GITHUB_TOKEN: {{GITHUB_TOKEN}}
+      REPONAME: {{SI2CI_NAME}}
+      GITHUB_ORGNAME: {{GITHUB_ORGNAME}}
+      GITHUB_SSHKEY: {{GITHUB_SSHKEY}}
+      SPRING_INITURL: {{SPRING_INITURL}}
+      CONCOURSE_TARGET: {{CONCOURSE_TARGET}}
+      GIT_URL: {{GIT_URL}}
+      PAS_USERNAME: {{PAS_USERNAME}}
+      PAS_PASSWORD: {{PAS_PASSWORD}}
+      PAS_ORGANIZATION: {{PAS_ORGANIZATION}}
+      PAS_SPACE: {{SI2CI_NAME}}
+      PAS_API: {{PAS_API}}
+      PAS_DOMAIN: {{PAS_DOMAIN}}
+      CONCOURSE_USERNAME: {{CONCOURSE_USERNAME}}
+      CONCOURSE_PASSWORD: {{CONCOURSE_PASSWORD}}

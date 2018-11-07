@@ -1,0 +1,15 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: pivotalservices/docker-concourse-cf-tools
+    tag: "latest"
+
+inputs:
+- name: application-pipeline
+
+
+run:
+  path: application-pipeline/pipeline/tasks/run-security-tests

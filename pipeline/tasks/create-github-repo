@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -eu
+
+root=$PWD
+
+/app/github_create_repository -name=$REPONAME --description=$DESCRIPTION

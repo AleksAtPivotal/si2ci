@@ -1,0 +1,14 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: pivotalservices/docker-concourse-cf-tools
+    tag: "latest"
+    
+inputs:
+- name: si2ci
+
+run:
+  path: si2ci/pipeline/tasks/push-templates

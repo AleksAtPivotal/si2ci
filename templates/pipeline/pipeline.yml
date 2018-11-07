@@ -1,0 +1,124 @@
+groups:
+- name: main
+  jobs:
+  - unit-tests
+  - security-tests
+  - deploy-app
+  - load-tests
+  - promote-new-version
+
+resources:
+- name: application-pipeline
+  type: git
+  source:
+    branch: master
+    uri: {{git-url}}
+- name: PAS
+  type: cf
+  source:
+    api: {{pws-api}}
+    organization: {{pws-organization}}
+    username: {{deploy-username}}
+    password: {{deploy-password}}
+    skip_cert_check: true
+    space: {{pws-space}}
+
+jobs:
+- name: unit-tests
+  serial: true
+  public: true
+  plan:
+  - get: application-pipeline
+    trigger: true
+  - task: run-unit-tests
+    file: application-pipeline/pipeline/tasks/unit-tests.yml
+
+- name: security-tests
+  serial: true
+  public: true
+  plan:
+  - get: application-pipeline
+    trigger: true
+    passed:
+      - unit-tests
+  - task: run-security-tests
+    file: application-pipeline/pipeline/tasks/run-security-tests.yml
+
+- name: deploy-app
+  serial: true
+  public: true
+  plan:
+  - get: application-pipeline
+    trigger: true
+    passed:
+      - security-tests
+  - task: get-current-app-color
+    file: application-pipeline/pipeline/tasks/current-app-get-info.yml
+    params:
+      PWS_APP_SUFFIX: {{pws-app-suffix}}
+      PWS_API: {{pws-api}}
+      PWS_ORG: {{pws-organization}}
+      PWS_USER: {{deploy-username}}
+      PWS_PWD: {{deploy-password}}
+      PWS_SPACE: {{pws-space}}
+  - task: prepare-app-manifest
+    file: application-pipeline/pipeline/tasks/app-manifest-prep.yml
+    params:
+      PWS_APP_SUFFIX: {{pws-app-suffix}}
+  - task: build-app
+    file: application-pipeline/pipeline/tasks/build-app.yml
+  - put: PAS
+    params:
+      manifest: app-manifest-output/manifest.yml
+      path: application-pipeline/
+
+- name: load-tests
+  serial: true
+  public: true
+  plan:
+  - get: application-pipeline
+    trigger: true
+    passed:
+      - deploy-app
+  - task: get-current-app-color
+    file: application-pipeline/pipeline/tasks/current-app-get-info.yml
+    params:
+      PWS_APP_SUFFIX: {{pws-app-suffix}}
+      PWS_API: {{pws-api}}
+      PWS_ORG: {{pws-organization}}
+      PWS_USER: {{deploy-username}}
+      PWS_PWD: {{deploy-password}}
+      PWS_SPACE: {{pws-space}}
+  - task: run-load-tests
+    file: application-pipeline/pipeline/tasks/load-tests.yml
+    params:
+      PWS_APP_SUFFIX: {{pws-app-suffix}}
+      PWS_APP_DOMAIN: {{pws-app-domain}}
+
+- name: promote-new-version
+  serial: true
+  public: true
+  plan:
+  - get: application-pipeline
+    trigger: true
+    passed:
+      - load-tests
+  - task: get-current-app-color
+    file: application-pipeline/pipeline/tasks/current-app-get-info.yml
+    params:
+      PWS_APP_SUFFIX: {{pws-app-suffix}}
+      PWS_API: {{pws-api}}
+      PWS_ORG: {{pws-organization}}
+      PWS_USER: {{deploy-username}}
+      PWS_PWD: {{deploy-password}}
+      PWS_SPACE: {{pws-space}}
+  - task: switch-app-routes
+    file: application-pipeline/pipeline/tasks/update-routes.yml
+    params:
+      PWS_APP_SUFFIX: {{pws-app-suffix}}
+      PWS_APP_DOMAIN: {{pws-app-domain}}
+      PWS_API: {{pws-api}}
+      PWS_ORG: {{pws-organization}}
+      PWS_USER: {{deploy-username}}
+      PWS_PWD: {{deploy-password}}
+      PWS_SPACE: {{pws-space}}

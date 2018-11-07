@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -xe
+
+echo This is not real
+sleep 10

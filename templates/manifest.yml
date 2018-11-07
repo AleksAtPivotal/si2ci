@@ -1,0 +1,5 @@
+---
+applications:
+- name: APPNAME
+  memory: 1024M
+  instances: 1

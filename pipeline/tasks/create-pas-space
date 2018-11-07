@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -xe
+
+pwd
+
+cf api $PAS_API --skip-ssl-validation
+
+echo -n | cf login -u $PAS_USERNAME -p $PAS_PASSWORD -o "$PAS_ORGANIZATION"
+set +e
+cf create-space $PAS_SPACE

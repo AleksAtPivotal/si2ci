@@ -1,0 +1,53 @@
+#!/bin/sh
+
+set -eu
+
+root=$PWD
+
+ls -ltrh
+mkdir $HOME/.ssh
+echo "$GITHUB_SSHKEY" > $HOME/.ssh/id_rsa
+echo Clonning repo
+ssh-keyscan github.com >> ~/.ssh/known_hosts
+chmod 700 ~/.ssh/known_hosts
+chmod 700 ~/.ssh/id_rsa
+git clone git@github.com:$GITHUB_ORGNAME/$REPONAME.git
+cd $REPONAME
+
+sourcefile=$(find ./src/main/ | grep "\.java")
+rm $sourcefile
+touch $sourcefile
+cat <<EOF > $sourcefile
+package com.example.demo;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@SpringBootApplication
+public class DemoApplication {
+
+	@RequestMapping("/")
+    public String index() {
+        return "No humans were involved in creation of this page v1.0";
+    }
+
+	public static void main(String[] args) {
+		SpringApplication.run(DemoApplication.class, args);
+	}
+
+	
+
+}
+EOF
+
+echo  >> .gitignore
+echo "pipeline/credentials.yml" >> .gitignore
+
+git config --global user.email "ubsbot@pivotal.io"
+git config --global user.name "UBS BOT"
+git add -A 
+git commit -a -m "Added Mock code "
+git push

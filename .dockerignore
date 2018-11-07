@@ -1,0 +1,8 @@
+.dockerignore
+Dockerfile
+./bin
+pipeline
+*.log
+.git
+infra
+templates

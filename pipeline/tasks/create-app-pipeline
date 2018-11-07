@@ -1,0 +1,36 @@
+#!/bin/sh
+
+set -eu
+
+root=$PWD
+
+# get fly
+curl "$CONCOURSE_TARGET/api/v1/cli?arch=amd64&platform=linux" -o fly
+chmod +x fly
+alias fly="$PWD/fly"
+
+fly login -t concourse -c $CONCOURSE_TARGET -k -u $CONCOURSE_USERNAME -p $CONCOURSE_PASSWORD
+
+mkdir $HOME/.ssh
+echo "$GITHUB_SSHKEY" > $HOME/.ssh/id_rsa
+echo Clonning repo
+ssh-keyscan github.com >> ~/.ssh/known_hosts
+chmod 700 ~/.ssh/known_hosts
+chmod 700 ~/.ssh/id_rsa
+git clone git@github.com:$GITHUB_ORGNAME/$REPONAME.git
+cd $REPONAME
+
+cat <<EOF > pipeline/credentials.yml
+deploy-username: $PAS_USERNAME
+deploy-password: $PAS_PASSWORD
+pws-organization: $PAS_ORGANIZATION
+pws-space: $PAS_SPACE
+pws-api: $PAS_API
+pws-app-suffix: $REPONAME
+pws-app-domain: $PAS_DOMAIN
+git-url: https://github.com/$GITHUB_ORGNAME/$REPONAME.git
+EOF
+
+fly -t concourse set-pipeline -p $REPONAME-blue-green -c pipeline/pipeline.yml -l pipeline/credentials.yml -n
+fly -t concourse unpause-pipeline -p $REPONAME-blue-green 
+

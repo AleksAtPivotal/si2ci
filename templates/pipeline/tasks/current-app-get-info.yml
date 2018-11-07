@@ -1,0 +1,17 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: pivotalservices/docker-concourse-cf-tools
+    tag: "latest"
+
+inputs:
+- name: application-pipeline
+
+outputs:
+- name: current-app-info
+
+run:
+  path: application-pipeline/pipeline/tasks/current-app-get-info

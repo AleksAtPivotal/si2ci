@@ -1,0 +1,9 @@
+---
+applications:
+- name: si2ci
+  memory: 512M
+  instances: 1
+  buildpack: go_buildpack
+  no-route: true
+  env:
+    GOPACKAGENAME: github.com/alekssaul/demoapp-initializr

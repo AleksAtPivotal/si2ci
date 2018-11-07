@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -xe
+
+cat ./current-app-info/current-app.txt
+
+sed "s/APPNAME/$(cat ./current-app-info/next-app.txt)-$PWS_APP_SUFFIX/" ./application-pipeline/manifest.yml > ./app-manifest-info/manifest.yml
+
+cat ./app-manifest-info/manifest.yml

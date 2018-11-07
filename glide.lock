@@ -1,0 +1,237 @@
+hash: 01a8315d73546358cd6a19d7082dd5caab811b8228e5b93868fab9dd15fd1475
+updated: 2018-11-03T19:57:27.440415-04:00
+imports:
+- name: code.cloudfoundry.org/lager
+  version: 1a7fb7de44c33d258236e250189099e48a4c7430
+- name: github.com/aryann/difflib
+  version: e206f873d14a916d3d26c40ab667bca123f365a3
+- name: github.com/bmatcuk/doublestar
+  version: 85a78806aa1b4707d1dbace9be592cf1ece91ab3
+- name: github.com/bmizerany/pat
+  version: 6226ea591a40176dd3ff9cd8eff81ed6ca721a00
+- name: github.com/charlievieth/fs
+  version: 7dc373669fa10ddf827c37c595dee30a2f001be9
+- name: github.com/cloudfoundry/bosh-cli
+  version: 8366c6fd5cd98b7c9051dc9481f67c88fb8606f9
+  subpackages:
+  - director/template
+- name: github.com/cloudfoundry/bosh-utils
+  version: d680486314f079e4cb4896cffee9834d7f0dece3
+  subpackages:
+  - errors
+  - logger
+  - system
+- name: github.com/concourse/atc
+  version: 071f8bcda9cee4d597459e1302a57c695561d85d
+  subpackages:
+  - event
+- name: github.com/concourse/dex
+  version: 4a3bb9452ad1d71c5bbed2404183f2939b2fcd17
+  subpackages:
+  - connector
+  - connector/cf
+  - connector/github
+  - connector/gitlab
+  - connector/ldap
+  - connector/oauth
+  - connector/oidc
+- name: github.com/concourse/flag
+  version: cb47f24fff1ca64153f93aae2d63ead937ee9bab
+- name: github.com/concourse/fly
+  version: 79616b2348f39c74b6e3290c585a24a0faac3e3b
+  subpackages:
+  - commands
+  - commands/internal/displayhelpers
+  - commands/internal/executehelpers
+  - commands/internal/flaghelpers
+  - commands/internal/hijacker
+  - commands/internal/hijackhelpers
+  - commands/internal/setpipelinehelpers
+  - config
+  - eventstream
+  - pty
+  - rc
+  - template
+  - ui
+  - version
+- name: github.com/concourse/go-archive
+  version: 784931698f4fa89492dba62ce4e6c20f47f4eea6
+  subpackages:
+  - tarfs
+  - tgzfs
+- name: github.com/concourse/go-concourse
+  version: 79a832c54c62c957d666520937ee4a62b1af9efc
+  subpackages:
+  - concourse
+  - concourse/eventstream
+  - concourse/internal
+- name: github.com/concourse/skymarshal
+  version: 30842c3e14d692cfe03c324f98f8a15a5b430a54
+  subpackages:
+  - skycmd
+- name: github.com/coreos/go-oidc
+  version: 66476e0267012774b2f9767d2d37a317d1f1aac3
+- name: github.com/cppforlife/go-patch
+  version: 250da0e0e68ce3367b4302f34218f6c064eb9559
+  subpackages:
+  - patch
+- name: github.com/cppforlife/go-semi-semantic
+  version: 576b6af77ae4f3ccef356902fb3b9a9ae22e0b11
+  subpackages:
+  - version
+- name: github.com/dgrijalva/jwt-go
+  version: 3af4c746e1c248ee8491a3e0c6f7a9cd831e95f8
+- name: github.com/fatih/color
+  version: 3f9d52f7176a6927daacff70a3e8d1dc2025c53e
+- name: github.com/golang/protobuf
+  version: 1643683e1b54a9e88ad26d98f81400c8c9d9f4f9
+  subpackages:
+  - proto
+- name: github.com/google/go-github
+  version: f55b50f38167644bb7e4be03d9a2bde71d435239
+  subpackages:
+  - github
+- name: github.com/google/jsonapi
+  version: d0428f63eb511f08685bda2d0a6af1d7532fb1c0
+- name: github.com/gorilla/websocket
+  version: 483fb8d7c32fcb4b5636cd293a92e3935932e2f4
+- name: github.com/hashicorp/errwrap
+  version: 8a6fb523712970c966eefc6b39ed2c5e74880354
+- name: github.com/hashicorp/go-multierror
+  version: 886a7fbe3eb1c874d46f623bfa70af45f425b3d1
+- name: github.com/inconshreveable/go-update
+  version: 8152e7eb6ccf8679a64582a66b78519688d156ad
+  subpackages:
+  - internal/binarydist
+  - internal/osext
+- name: github.com/jessevdk/go-flags
+  version: 5de817a9aa209ed35a164cb04aec82b7df1a47a6
+- name: github.com/konsorten/go-windows-terminal-sequences
+  version: 5c8c8bd35d3832f5d134ae1e1e375b69a4d25242
+- name: github.com/kr/pty
+  version: db8e3cd836b82e82e0a9c8edc6896967dd31374f
+- name: github.com/krishicks/yaml-patch
+  version: 94f42521ff99ba62ddeca5ddae47264ade0b8df6
+- name: github.com/mattn/go-colorable
+  version: efa589957cd060542a26d2dd7832fd6a6c6c3ade
+- name: github.com/mattn/go-isatty
+  version: 3fb116b820352b7f0c281308a4d6250c22d94e27
+- name: github.com/mattn/go-runewidth
+  version: b20a3daf6a39840c202fd42cc23d53607162b045
+- name: github.com/mgutz/ansi
+  version: 9520e82c474b0a04dd04f8a40959027271bab992
+- name: github.com/mitchellh/mapstructure
+  version: 3536a929edddb9a5b34bd6861dc4a9647cb459fe
+- name: github.com/onsi/gomega
+  version: 69d9b434d9ada3ae03b699d67a006533029cba9a
+  subpackages:
+  - format
+  - gbytes
+  - gexec
+  - internal/assertion
+  - internal/asyncassertion
+  - internal/oraclematcher
+  - internal/testingtsupport
+  - matchers
+  - matchers/support/goraph/bipartitegraph
+  - matchers/support/goraph/edge
+  - matchers/support/goraph/node
+  - matchers/support/goraph/util
+  - types
+- name: github.com/peterhellberg/link
+  version: 6d32b8d78d1e440948a1c461c5abcc6bf7881641
+- name: github.com/pkg/term
+  version: cc118f533a7e84f48e389384d0d75606ea2e098a
+  subpackages:
+  - termios
+- name: github.com/pquerna/cachecontrol
+  version: 1555304b9b35fdd2b425bccf1a5613677705e7d0
+  subpackages:
+  - cacheobject
+- name: github.com/sirupsen/logrus
+  version: ad15b42461921f1fb3529b058c6786c6a45d5162
+- name: github.com/skratchdot/open-golang
+  version: 75fb7ed4208cf72d323d7d02fd1a5964a7a9073c
+  subpackages:
+  - open
+- name: github.com/tedsuo/rata
+  version: 07d200713958d05692ac35aa8b5f1949342fee80
+- name: github.com/vito/go-interact
+  version: fa338ed9e9ecbb0e9c2e6c7a0160d9fc9b0efbd9
+  subpackages:
+  - interact
+  - interact/terminal
+- name: github.com/vito/go-sse
+  version: fd69d275caac5d78d793e77ddbe9bd2001d9b88d
+  subpackages:
+  - sse
+- name: golang.org/x/crypto
+  version: 49796115aa4b964c318aad4f3084fdb41e9aa067
+  subpackages:
+  - curve25519
+  - ed25519
+  - ed25519/internal/edwards25519
+  - internal/chacha20
+  - poly1305
+  - ssh
+  - ssh/terminal
+- name: golang.org/x/net
+  version: 1c05540f6879653db88113bc4a2b70aec4bd491f
+  subpackages:
+  - context
+  - context/ctxhttp
+  - html
+  - html/atom
+  - html/charset
+- name: golang.org/x/oauth2
+  version: 232e45548389bd9357411a6922a07c5fd4068bda
+  subpackages:
+  - github
+  - internal
+- name: golang.org/x/sys
+  version: 95c6576299259db960f6c5b9b69ea52422860fce
+  subpackages:
+  - unix
+  - windows
+- name: golang.org/x/text
+  version: b19bf474d317b857955b12035d2c5acb57ce8b01
+  subpackages:
+  - encoding
+  - encoding/charmap
+  - encoding/htmlindex
+  - encoding/internal
+  - encoding/internal/identifier
+  - encoding/japanese
+  - encoding/korean
+  - encoding/simplifiedchinese
+  - encoding/traditionalchinese
+  - encoding/unicode
+  - internal/tag
+  - internal/utf8internal
+  - language
+  - runes
+  - transform
+- name: google.golang.org/appengine
+  version: 4a4468ece617fc8205e99368fa2200e9d1fad421
+  subpackages:
+  - internal
+  - internal/base
+  - internal/datastore
+  - internal/log
+  - internal/remote_api
+  - internal/urlfetch
+  - urlfetch
+- name: gopkg.in/asn1-ber.v1
+  version: 379148ca0225df7a432012b8df0355c2a2063ac0
+- name: gopkg.in/cheggaaa/pb.v1
+  version: 007b75a044e968336a69a6c0c617251ab62ac14c
+- name: gopkg.in/ldap.v2
+  version: bb7a9ca6e4fbc2129e3db588a34bc970ffe811a9
+- name: gopkg.in/square/go-jose.v2
+  version: f8f38de21b4dcd69d0413faf231983f5fd6634b1
+  subpackages:
+  - cipher
+  - json
+- name: gopkg.in/yaml.v2
+  version: 5420a8b6744d3b0345ab293f6fcba19c978f1183
+testImports: []
